@@ -1,0 +1,86 @@
+{
+    "workflowApiVersion": "1.1",
+    "metaData": {
+        "icon": "images/digiwhiff-icon.jpg",
+        "category": "message"
+    },
+    "type": "REST",
+    "lang": {
+        "en-US": {
+            "name": "Digiwhiff Custom API Integration",
+            "description": "Process data through external API and store results",
+            "CustomMessage": "test"
+        }
+    },
+    "arguments": {
+        "execute": {
+            "inArguments": [],
+            "outArguments": [],
+            "url": "https://digiwiff-ca.comsensetechnologies.com/journeybuilder/execute/",
+            "verb": "POST",
+            "body": "",
+            "format": "json",
+            "useJwt": false,
+            "timeout": 100000,
+            "retryCount": 1,
+            "retryDelay": 10000,
+            "concurrentRequests": 5
+        }
+    },
+    "configurationArguments": {
+        "applicationExtensionKey": "b9e4e48c-cb47-4fc0-9a9c-4dc32737e886",
+        "save": {
+            "url": "https://digiwiff-ca.comsensetechnologies.com/journeybuilder/save/",
+            "verb": "POST",
+            "body": "",
+            "format": "json",
+            "useJwt": false,
+            "timeout": 2000
+        },
+        "publish": {
+            "url": "https://digiwiff-ca.comsensetechnologies.com/journeybuilder/publish/",
+            "verb": "POST",
+            "body": "",
+            "format": "json",
+            "useJwt": false,
+            "timeout": 2000
+        },
+        "validate": {
+            "url": "https://digiwiff-ca.comsensetechnologies.com/journeybuilder/validate/",
+            "verb": "POST",
+            "body": "",
+            "format": "json",
+            "useJwt": false,
+            "timeout": 2000
+        },
+        "stop": {
+            "url": "https://digiwiff-ca.comsensetechnologies.com/journeybuilder/stop",
+            "verb": "POST",
+            "body": "",
+            "format": "json",
+            "useJwt": false,
+            "timeout": 2000
+        }
+    },
+    "wizardSteps": [
+        {
+            "label": "Configure API Integration",
+            "key": "step1"
+        }
+    ],
+    "userInterfaces": {
+        "configModal": {
+            "height": 600,
+            "width": 800,
+            "fullscreen": false
+        }
+    },
+    "schema": {
+        "arguments": {
+            "execute": {
+                "inArguments": [],
+                "outArguments": []
+            }
+        }
+    }
+}

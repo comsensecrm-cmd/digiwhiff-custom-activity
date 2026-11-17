@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Digiwhiff RCS Activity</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+        integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg=="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        (function () {
+            var config = {
+                baseUrl: 'js',
+                paths: {
+                    'jquery': '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min',
+                    'postmonger': 'postmonger',
+                    'schemaManager': 'schemaManager',
+                    'validator': 'validator'
+                }
+            };
+            require(config, ['customActivity']);
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="step1" class="step">
+
+        <!-- ── Header ─────────────────────────────── -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="header-logo">
+                    <img src="images/digiwhiff-icon.jpg" alt="Digiwhiff" />
+                </div>
+                <div>
+                    <div class="header-title">Digiwhiff RCS Activity</div>
+                    <div class="header-sub">Configure rcs message templates via RCM API</div>
+                </div>
+            </div>
+            <div class="header-status">
+                <span class="status-pulse"></span>RCM API
+            </div>
+        </header>
+
+        <!-- ── Page Body ───────────────────────────── -->
+        <div class="page-body">
+            <div class="form-page">
+
+                <!-- ══ 1. Data Extension Configuration ═══════════ -->
+                <div class="form-section">
+                    <div class="form-section-head">
+                        <div class="form-section-title">Data Extension Configuration</div>
+                        <div class="form-section-sub">Connect your SFMC source Data Extension</div>
+                    </div>
+
+                    <!-- Input DE Key -->
+                    <div class="field-block">
+                        <label class="f-label" for="inputDataExtensionKey">
+                            Input Data Extension Key
+                            <span class="f-tag editable">Editable</span>
+                        </label>
+                        <input class="f-input" id="inputDataExtensionKey" type="text"
+                            placeholder="Paste the External Key (GUID) of your source Data Extension…">
+                        <p class="f-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Enter the External Key from your SFMC Data Extension. All fields below unlock once a key is
+                            entered.
+                        </p>
+                        <p class="f-hint f-hint-error" id="deKeyValidationHint" style="display:none">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Only GUID format is accepted, e.g. <code>FF56356D-E7E6-42C9-A8BE-BEA43369C185</code>
+                        </p>
+                    </div>
+
+                    <!-- Output DEs — compact -->
+                    <div class="output-de-block">
+                        <div class="output-de-header">
+                            <span class="output-de-title">Output Data Extensions</span>
+                            <span class="f-tag readonly">Auto-configured</span>
+                        </div>
+                        <div class="output-de-list">
+                            <div class="output-de-row">
+                                <span class="de-dot green"></span>
+                                <span class="de-row-label">Success Logs</span>
+                                <span class="de-row-name">DIGIWHIFF_WHATSAPP_SUCCESS_LOG_DE</span>
+                                <code class="de-row-key">3018886E-8164-4F31-AF72-D5FD873B7CA8</code>
+                                <button class="btn-copy" title="Copy key"
+                                    data-key="3018886E-8164-4F31-AF72-D5FD873B7CA8" onclick="copyKey(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="output-de-row">
+                                <span class="de-dot red"></span>
+                                <span class="de-row-label">Error Logs</span>
+                                <span class="de-row-name">DIGIWHIFF_WHATSAPP_ERROR_LOG_DE</span>
+                                <code class="de-row-key">AE2FE433-F882-41DC-B196-7BA27A3902DC</code>
+                                <button class="btn-copy" title="Copy key"
+                                    data-key="AE2FE433-F882-41DC-B196-7BA27A3902DC" onclick="copyKey(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══ Loading ═══════════════════════════════════ -->
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner-ring"></div>
+                    <p class="loading-text">Loading configuration…</p>
+                </div>
+
+                <!-- ══ Dynamic Sections (Recipient + Template) ═══ -->
+                <div id="configurationSection" class="form-section section-locked">
+                    <div class="section-lock-bar">
+                        <i class="fas fa-lock"></i>
+                        Enter the Input Data Extension Key above to unlock
+                    </div>
+                    <div id="apiDescription" class="form-section api-description" style="display:none">
+                        <p><i class="fas fa-info-circle"></i> <span id="apiDescriptionText"></span></p>
+                    </div>
+                    <div id="dynamicFieldsContainer"></div>
+                </div>
+
+            </div><!-- /.form-page -->
+        </div><!-- /.page-body -->
+
+    </div><!-- /#step1 -->
+
+    <script>
+        function copyKey(btn) {
+            var val = btn.getAttribute('data-key');
+            navigator.clipboard.writeText(val).then(function () {
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.classList.add('copied');
+                setTimeout(function () {
+                    btn.innerHTML = '<i class="fas fa-copy"></i>';
+                    btn.classList.remove('copied');
+                }, 1800);
+            });
+        }
+    </script>
+</body>
+
+</html>

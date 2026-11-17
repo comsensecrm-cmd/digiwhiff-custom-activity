@@ -1,0 +1,111 @@
+{
+  "apiTypes": [
+    {
+      "id": "rcs",
+      "name": "RCS Message",
+      "contentType": "TEMPLATE",
+      "endpoint": "https://automate.nexgplatforms.com/api/v1/rcs/multi-send",
+      "icon": "fa-comment-dots",
+      "description": "Send an RCS message using a template configured in RCM. Fill in only the fields your template actually uses — the payload shape is the same for every template.",
+      "schema": {
+        "baseFields": [
+          {
+            "name": "to",
+            "type": "string",
+            "required": true,
+            "dynamic": true,
+            "label": "Recipient Contact Number",
+            "placeholder": "7218980233",
+            "helpText": "Phone number to send message to (dynamic from Data Extension)"
+          },
+          {
+            "name": "templateId",
+            "type": "string",
+            "required": true,
+            "dynamic": true,
+            "label": "Template ID",
+            "placeholder": "223b450d-48e9-4147-8ac2-e734038205a9",
+            "helpText": "Template ID from RCM (dynamic from Data Extension)"
+          }
+        ],
+        "templateFields": {
+          "messageTextVariables": {
+            "type": "array",
+            "required": false,
+            "itemType": "string",
+            "dynamic": true,
+            "maxItems": 10,
+            "label": "Message Text Variable",
+            "helpText": "Parameter values for template placeholders (0-10 values, optional)"
+          },
+          "buttonVariables": {
+            "type": "array",
+            "required": false,
+            "itemType": "string",
+            "dynamic": true,
+            "maxItems": 10,
+            "noDefaultItem": true,
+            "label": "Button Variable",
+            "helpText": "Value for suggested-reply/button variables (optional, leave empty to send \"[]\")",
+            "indexedMultiValue": true
+          },
+          "carouselCardTitleVariables": {
+            "type": "array",
+            "required": false,
+            "itemType": "string",
+            "dynamic": true,
+            "maxItems": 10,
+            "noDefaultItem": true,
+            "indexedMultiValue": true,
+            "label": "Card Title Variable(s)",
+            "helpText": "Title text for a rich card / carousel card. Add one entry per card if your template has multiple (optional)"
+          },
+          "carouselCardDescriptionVariables": {
+            "type": "array",
+            "required": false,
+            "itemType": "string",
+            "dynamic": true,
+            "maxItems": 10,
+            "noDefaultItem": true,
+            "indexedMultiValue": true,
+            "label": "Card Description Variable(s)",
+            "helpText": "Description text for a rich card / carousel card, in the same order as the titles above (optional)"
+          },
+          "callButtonVariables": {
+            "type": "array",
+            "required": false,
+            "itemType": "string",
+            "dynamic": true,
+            "maxItems": 10,
+            "noDefaultItem": true,
+            "label": "Call-to-Action (Call) Variable",
+            "helpText": "Value for a \"Call\" suggested-action button (optional)",
+            "indexedMultiValue": true
+          },
+          "visitWebsiteButtonVariables": {
+            "type": "array",
+            "required": false,
+            "itemType": "string",
+            "dynamic": true,
+            "maxItems": 10,
+            "noDefaultItem": true,
+            "label": "Visit Website Button Variable",
+            "helpText": "Label for a \"Visit Website\" suggested-action button (optional)",
+            "indexedMultiValue": true
+          },
+          "visitWebsiteUrlVariables": {
+            "type": "array",
+            "required": false,
+            "itemType": "string",
+            "dynamic": true,
+            "maxItems": 10,
+            "noDefaultItem": true,
+            "label": "Visit Website URL Variable",
+            "helpText": "Target URL for the \"Visit Website\" suggested-action button (optional)",
+            "indexedMultiValue": true
+          }
+        }
+      }
+    }
+  ]
+}
